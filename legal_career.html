@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub - Legal & Careers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --card-bg: rgba(30, 35, 56, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Page Container */
+        .page-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Page Navigation */
+        .page-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-nav-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-nav-btn.active {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .page-nav-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Legal Page Styles */
+        .legal-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legal-content {
+            line-height: 1.8;
+        }
+
+        .legal-content p {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .legal-content h3 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        .legal-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Careers Page Styles */
+        .careers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .career-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(108, 92, 231, 0.4);
+        }
+
+        .job-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-description {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-tag {
+            background: rgba(108, 92, 231, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .benefits-section {
+            margin: 4rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .legal-section, .career-card, .benefit-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="About.html" class="nav-link">About</a>
+            <a href="#" class="nav-link active">Legal & Careers</a>
+        </nav>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Navigation -->
+        <div class="page-nav">
+            <button class="page-nav-btn active" data-page="legal">Legal Information</button>
+            <button class="page-nav-btn" data-page="careers">Join Our Team</button>
+        </div>
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">CryptoHub Policies & Opportunities</h1>
+            <p class="page-subtitle">Transparency in our operations and exciting opportunities to join our innovative team</p>
+        </div>
+        
+        <!-- Legal Page Content -->
+        <div id="legal-content" class="page-content active">
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-balance-scale"></i>
+                    Terms of Service
+                </h2>
+                <div class="legal-content">
+                    <p>Welcome to CryptoHub! These Terms of Service govern your use of our platform and services. By accessing or using CryptoHub, you agree to comply with these terms.</p>
+                    
+                    <h3>1. Account Registration</h3>
+                    <p>To use certain features of CryptoHub, you must create an account. You agree to provide accurate and complete information and keep it updated.</p>
+                    
+                    <h3>2. Acceptable Use</h3>
+                    <p>You agree not to engage in any of the following prohibited activities:</p>
+                    <ul>
+                        <li>Violating any laws or regulations</li>
+                        <li>Interfering with the security of the platform</li>
+                        <li>Engaging in fraudulent activities</li>
+                        <li>Distributing viruses or malicious code</li>
+                        <li>Attempting to access other users' accounts</li>
+                    </ul>
+                    
+                    <h3>3. Intellectual Property</h3>
+                    <p>All content on CryptoHub, including text, graphics, logos, and software, is the property of CryptoHub or its licensors and is protected by intellectual property laws.</p>
+                    
+                    <h3>4. Termination</h3>
+                    <p>We may terminate or suspend your account immediately, without prior notice, for any breach of these Terms.</p>
+                </div>
+            </div>
+            
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-shield"></i>
+                    Privacy Policy
+                </h2>
+                <div class="legal-content">
+                    <p>At CryptoHub, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.</p>
+                    
+                    <h3>Information We Collect</h3>
+                    <p>We collect information you provide directly to us when you create an account, make transactions, or contact customer support. This may include:</p>
+                    <ul>
+                        <li>Personal identification information (name, email, address)</li>
+                        <li>Financial information for transaction processing</li>
+                        <li>Technical data such as IP address and device information</li>
+                    </ul>
+                    
+                    <h3>How We Use Your Information</h3>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide, maintain, and improve our services</li>
+                        <li>Process transactions and send related information</li>
+                        <li>Detect and prevent fraud</li>
+                        <li>Comply with legal obligations</li>
+                    </ul>
+                    
+                    <h3>Security Measures</h3>
+                    <p>We implement industry-standard security measures to protect your information, including encryption, firewalls, and secure server facilities.</p>
+                </div>
+            </div>
+            
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gavel"></i>
+                    Compliance & Regulations
+                </h2>
+                <div class="legal-content">
+                    <p>CryptoHub operates in compliance with applicable financial regulations and anti-money laundering (AML) requirements.</p>
+                    
+                    <h3>KYC Procedures</h3>
+                    <p>We adhere to Know Your Customer (KYC) regulations to verify the identity of our users and prevent fraudulent activities.</p>
+                    
+                    <h3>AML Policy</h3>
+                    <p>Our Anti-Money Laundering policy includes transaction monitoring, suspicious activity reporting, and employee training to detect and prevent money laundering.</p>
+                    
+                    <h3>Licensing</h3>
+                    <p>CryptoHub is registered with the appropriate financial authorities in the jurisdictions where we operate.</p>
+                    
+                    <h3>Tax Compliance</h3>
+                    <p>Users are responsible for reporting their cryptocurrency transactions to tax authorities as required by law in their jurisdiction.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Careers Page Content -->
+        <div id="careers-content" class="page-content">
+            <div class="page-header">
+                <h1 class="page-title">Join the CryptoHub Revolution</h1>
+                <p class="page-subtitle">Help shape the future of cryptocurrency with our innovative team</p>
+            </div>
+            
+            <div class="benefits-section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Why Work at CryptoHub
+                </h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="benefit-title">Cutting-Edge Innovation</h3>
+                        <p>Work with the latest blockchain technologies and contribute to innovative financial solutions.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="benefit-title">Global Impact</h3>
+                        <p>Be part of a platform that serves millions of users worldwide and transforms the financial landscape.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="benefit-title">Collaborative Culture</h3>
+                        <p>Join a team of passionate professionals who value collaboration, creativity, and continuous learning.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">
+                <i class="fas fa-briefcase"></i>
+                Current Openings
+            </h2>
+            <div class="careers-grid">
+                <!-- Blockchain Developer -->
+                <div class="career-card">
+                    <h3 class="job-title">Senior Blockchain Developer</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <p class="job-description">Develop and maintain our blockchain infrastructure, smart contracts, and decentralized applications.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">Solidity</span>
+                        <span class="job-tag">Ethereum</span>
+                        <span class="job-tag">Smart Contracts</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                </div>
+                
+                <!-- Security Engineer -->
+                <div class="career-card">
+                    <h3 class="job-title">Security Engineer</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> San Francisco</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <p class="job-description">Design and implement security protocols to protect our platform and user assets from threats.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">Cybersecurity</span>
+                        <span class="job-tag">Pen Testing</span>
+                        <span class="job-tag">Blockchain</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                </div>
+                
+                <!-- Product Designer -->
+                <div class="career-card">
+                    <h3 class="job-title">Product Designer</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> New York</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <p class="job-description">Create intuitive and beautiful user experiences for our cryptocurrency platform and mobile apps.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">UI/UX</span>
+                        <span class="job-tag">Figma</span>
+                        <span class="job-tag">Prototyping</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                </div>
+                
+                <!-- Marketing Specialist -->
+                <div class="career-card">
+                    <h3 class="job-title">Crypto Marketing Specialist</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <p class="job-description">Develop and execute marketing strategies to grow our user base in the crypto community.</p>
+                    <div class="job-tags">
+                        <span class="job-tag">Marketing</span>
+                        <span class="job-tag">Crypto</span>
+                        <span class="job-tag">Social Media</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                </div>
+            </div>
+            
+            <div class="legal-section" style="margin-top: 3rem;">
+                <h2 class="section-title">
+                    <i class="fas fa-handshake"></i>
+                    Our Hiring Process
+                </h2>
+                <div class="legal-content">
+                    <p>We've designed our hiring process to be transparent and efficient while ensuring we find the best talent:</p>
+                    
+                    <h3>1. Application Review</h3>
+                    <p>Our talent team reviews all applications to identify candidates whose skills and experience align with our requirements.</p>
+                    
+                    <h3>2. Initial Screening</h3>
+                    <p>A 30-minute video call to discuss your background, experience, and interest in CryptoHub.</p>
+                    
+                    <h3>3. Technical Assessment</h3>
+                    <p>For technical roles, a practical assignment to evaluate your skills in a real-world scenario.</p>
+                    
+                    <h3>4. Team Interviews</h3>
+                    <p>Meet with potential team members and managers to assess cultural fit and collaboration skills.</p>
+                    
+                    <h3>5. Offer</h3>
+                    <p>Successful candidates receive a competitive offer including salary, equity, and benefits.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                      <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.page-nav-btn');
+            const pageContents = document.querySelectorAll('.page-content');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Update active button
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target page content
+                    pageContents.forEach(content => {
+                        content.classList.remove('active');
+                        if(content.id === `${targetPage}-content`) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

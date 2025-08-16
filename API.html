@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | API Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --code-bg: rgba(30, 33, 50, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 206, 201, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 30%, rgba(162, 155, 254, 0.1) 0%, transparent 30%);
+            background-size: 200% 200%;
+            animation: gradientShift 25s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* API Hero Section */
+        .api-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .api-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .api-hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .api-hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .api-hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .api-hero-image {
+            position: relative;
+            z-index: 2;
+        }
+
+        .api-graphic {
+            font-size: 10rem;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* API Documentation */
+        .api-docs-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .api-nav {
+            flex: 0 0 280px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            height: fit-content;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .api-nav-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .api-nav-links {
+            list-style: none;
+        }
+
+        .api-nav-link {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .api-nav-link:hover, .api-nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .api-nav-link i {
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+
+        .api-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .api-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .api-section:last-child {
+            border-bottom: none;
+        }
+
+        .api-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .api-section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .api-description {
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            line-height: 1.8;
+        }
+
+        /* Endpoint Cards */
+        .endpoint-card {
+            background: rgba(30, 33, 50, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .endpoint-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .endpoint-method {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+        }
+
+        .method-get {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .method-post {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--primary);
+        }
+
+        .endpoint-path {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+
+        .endpoint-description {
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .endpoint-params {
+            margin-bottom: 1.2rem;
+        }
+
+        .params-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+
+        .param-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .param-name {
+            flex: 0 0 150px;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        .param-type {
+            flex: 0 0 100px;
+            font-family: monospace;
+            color: var(--warning);
+        }
+
+        .param-desc {
+            flex: 1;
+            color: var(--secondary);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .code-block pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: var(--light);
+            line-height: 1.5;
+        }
+
+        .code-block .comment {
+            color: #6c757d;
+        }
+
+        .code-block .string {
+            color: var(--success);
+        }
+
+        .code-block .keyword {
+            color: var(--primary);
+        }
+
+        .code-block .function {
+            color: var(--accent);
+        }
+
+        .code-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-tab {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .code-tab.active {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .api-docs-container {
+                flex-direction: column;
+            }
+            
+            .api-nav {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .api-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .api-hero-content {
+                margin-bottom: 2rem;
+            }
+            
+            .api-hero-image {
+                margin-top: 1.5rem;
+            }
+            
+            .api-graphic {
+                font-size: 7rem;
+            }
+            
+            .param-row {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .param-name, .param-type {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="api.html" class="nav-link active">API</a>
+            <a href="About.html" class="nav-link">About</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search endpoints...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">API Key</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- API Hero Section -->
+        <section class="api-hero">
+            <div class="api-hero-content">
+                <h1 class="api-hero-title">CryptoHub API Documentation</h1>
+                <p class="api-hero-subtitle">Integrate real-time cryptocurrency data into your applications with our powerful and easy-to-use API. Access market data, trading information, and blockchain analytics.</p>
+                <button class="btn btn-primary">Get API Key</button>
+            </div>
+            <div class="api-hero-image">
+                <div class="api-graphic">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Documentation -->
+        <div class="api-docs-container">
+            <!-- API Navigation -->
+            <div class="api-nav">
+                <h2 class="api-nav-title"><i class="fas fa-book"></i> Documentation</h2>
+                <ul class="api-nav-links">
+                    <li class="api-nav-link active" data-target="overview"><i class="fas fa-home"></i> Overview</li>
+                    <li class="api-nav-link" data-target="authentication"><i class="fas fa-key"></i> Authentication</li>
+                    <li class="api-nav-link" data-target="market"><i class="fas fa-chart-line"></i> Market Data</li>
+                    <li class="api-nav-link" data-target="trading"><i class="fas fa-exchange-alt"></i> Trading</li>
+                    <li class="api-nav-link" data-target="blockchain"><i class="fas fa-link"></i> Blockchain</li>
+                    <li class="api-nav-link" data-target="rate"><i class="fas fa-tachometer-alt"></i> Rate Limits</li>
+                    <li class="api-nav-link" data-target="examples"><i class="fas fa-code"></i> Code Examples</li>
+                </ul>
+            </div>
+
+            <!-- API Content -->
+            <div class="api-content">
+                <!-- Overview Section -->
+                <section id="overview" class="api-section">
+                    <h2 class="api-section-title"><i class="fas fa-home"></i> API Overview</h2>
+                    <div class="api-description">
+                        <p>The CryptoHub API provides developers with programmatic access to cryptocurrency market data, trading capabilities, and blockchain analytics. Our RESTful API uses standard HTTP methods and response codes, returning JSON-encoded responses.</p>
+                        <p>All API endpoints are served over HTTPS. The base URL for all endpoints is:</p>
+                        <div class="code-block">
+                            <pre>https://api.cryptohub.com/v1</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Authentication Section -->
+                <section id="authentication" class="api-section" style="display: none;">
+                    <h2 class="api-section-title"><i class="fas fa-key"></i> Authentication</h2>
+                    <div class="api-description">
+                        <p>To access the CryptoHub API, you need an API key which you can generate from your account dashboard. API keys are passed in the request header.</p>
+                        
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <div class="endpoint-method method-get">GET</div>
+                                <div class="endpoint-path">/account</div>
+                            </div>
+                            <div class="endpoint-description">
+                                Retrieve account information including balances and permissions.
+                            </div>
+                            <div class="endpoint-params">
+                                <div class="params-title">Headers</div>
+                                <div class="param-row">
+                                    <div class="param-name">X-API-KEY</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Your API key</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="code-tabs">
+                                <div class="code-tab active" data-tab="curl">cURL</div>
+                                <div class="code-tab" data-tab="js">JavaScript</div>
+                                <div class="code-tab" data-tab="py">Python</div>
+                            </div>
+                            
+                            <div class="tab-content active" id="curl">
+                                <pre>curl -X GET "https://api.cryptohub.com/v1/account" \
+  -H "X-API-KEY: YOUR_API_KEY"</pre>
+                            </div>
+                            
+                            <div class="tab-content" id="js">
+                                <pre>fetch('https://api.cryptohub.com/v1/account', {
+  method: 'GET',
+  headers: {
+    'X-API-KEY': 'YOUR_API_KEY'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));</pre>
+                            </div>
+                            
+                            <div class="tab-content" id="py">
+                                <pre>import requests
+
+url = "https://api.cryptohub.com/v1/account"
+headers = {"X-API-KEY": "YOUR_API_KEY"}
+
+response = requests.get(url, headers=headers)
+print(response.json())</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Market Data Section -->
+                <section id="market" class="api-section" style="display: none;">
+                    <h2 class="api-section-title"><i class="fas fa-chart-line"></i> Market Data</h2>
+                    <div class="api-description">
+                        <p>Access real-time and historical cryptocurrency market data including prices, trading volume, and market capitalization.</p>
+                        
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <div class="endpoint-method method-get">GET</div>
+                                <div class="endpoint-path">/markets</div>
+                            </div>
+                            <div class="endpoint-description">
+                                Get a list of all supported markets and trading pairs.
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <div class="endpoint-method method-get">GET</div>
+                                <div class="endpoint-path">/ticker/{symbol}</div>
+                            </div>
+                            <div class="endpoint-description">
+                                Get the latest ticker information for a specific cryptocurrency.
+                            </div>
+                            <div class="endpoint-params">
+                                <div class="params-title">Path Parameters</div>
+                                <div class="param-row">
+                                    <div class="param-name">symbol</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Cryptocurrency symbol (e.g., BTC, ETH)</div>
+                                </div>
+                                <div class="params-title">Query Parameters</div>
+                                <div class="param-row">
+                                    <div class="param-name">convert</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Currency to convert to (default: USD)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <pre>{
+  "symbol": "BTC",
+  "name": "Bitcoin",
+  "price": 61234.56,
+  "price_change_24h": 1234.56,
+  "price_change_percentage_24h": 2.06,
+  "market_cap": 1180000000000,
+  "volume_24h": 34567890123,
+  "last_updated": "2023-10-15T12:34:56Z"
+}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trading Section -->
+                <section id="trading" class="api-section" style="display: none;">
+                    <h2 class="api-section-title"><i class="fas fa-exchange-alt"></i> Trading</h2>
+                    <div class="api-description">
+                        <p>Execute trades, manage orders, and access trading history programmatically. All trading endpoints require authentication.</p>
+                        
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <div class="endpoint-method method-post">POST</div>
+                                <div class="endpoint-path">/orders</div>
+                            </div>
+                            <div class="endpoint-description">
+                                Place a new order (buy or sell).
+                            </div>
+                            <div class="endpoint-params">
+                                <div class="params-title">Body Parameters</div>
+                                <div class="param-row">
+                                    <div class="param-name">symbol</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Trading pair (e.g., BTC-USD)</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">side</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Order side: 'buy' or 'sell'</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">type</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-desc">Order type: 'market', 'limit', 'stop'</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">quantity</div>
+                                    <div class="param-type">number</div>
+                                    <div class="param-desc">Amount to trade</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">price</div>
+                                    <div class="param-type">number</div>
+                                    <div class="param-desc">Required for limit orders</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Rate Limits Section -->
+                <section id="rate" class="api-section" style="display: none;">
+                    <h2 class="api-section-title"><i class="fas fa-tachometer-alt"></i> Rate Limits</h2>
+                    <div class="api-description">
+                        <p>To ensure fair usage and system stability, CryptoHub API enforces rate limits:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--secondary);">
+                            <li><strong>Free Tier:</strong> 100 requests per minute</li>
+                            <li><strong>Basic Tier:</strong> 300 requests per minute</li>
+                            <li><strong>Pro Tier:</strong> 1,000 requests per minute</li>
+                            <li><strong>Enterprise:</strong> Custom limits</li>
+                        </ul>
+                        <p>Rate limit headers are included in every response:</p>
+                        <div class="code-block">
+                            <pre>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1634295600</pre>
+                        </div>
+                        <p>If you exceed your rate limit, you will receive a <code style="background: rgba(255, 118, 117, 0.2); padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--danger);">429 Too Many Requests</code> error.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                  <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                     <li><a href="About.html" target="_blank" rel="noopener noreferrer">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle sidebar navigation
+            const navLinks = document.querySelectorAll('.api-nav-link');
+            const sections = document.querySelectorAll('.api-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // Update active link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target section
+                    sections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Handle code tabs
+            const codeTabs = document.querySelectorAll('.code-tab');
+            
+            codeTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    const parent = this.parentElement.parentElement;
+                    
+                    // Update active tab
+                    this.parentElement.querySelectorAll('.code-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Show tab content
+                    parent.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    parent.querySelector(`#${tabId}`).classList.add('active');
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

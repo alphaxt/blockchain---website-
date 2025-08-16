@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Community Hero */
+        .community-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .community-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.1), transparent 70%);
+            z-index: -1;
+        }
+
+        .community-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .community-hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .community-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        /* Community Layout */
+        .community-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Forums Section */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .forums-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .forum-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .forum-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .forum-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .forum-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .forum-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .forum-desc {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .forum-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Discussion Threads */
+        .discussion-thread {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .discussion-thread:hover {
+            border-color: rgba(108, 92, 231, 0.3);
+            transform: translateX(5px);
+        }
+
+        .thread-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .thread-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .thread-user {
+            font-weight: 600;
+        }
+
+        .thread-time {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .thread-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .thread-content {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .thread-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(108, 92, 231, 0.1);
+            padding-top: 1rem;
+        }
+
+        .thread-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .thread-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Sidebar */
+        .sidebar-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-title i {
+            color: var(--accent);
+        }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .leaderboard-top .leaderboard-rank {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .leaderboard-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .leaderboard-info {
+            flex-grow: 1;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+        }
+
+        .leaderboard-stats {
+            display: flex;
+            gap: 1rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-points {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Trending Topics */
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+
+        .topic-link {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .topic-link:hover {
+            color: var(--accent);
+        }
+
+        .topic-stats {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Events */
+        .event-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-desc {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .community-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .community-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .community-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .forum-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+           <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="community.html" class="nav-link active">Community</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search community...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Community Content -->
+    <div class="container">
+        <!-- Community Hero -->
+        <section class="community-hero">
+            <h1>CryptoHub Community</h1>
+            <p>Connect with fellow crypto enthusiasts, share insights, and discuss the latest trends in the blockchain world.</p>
+            <button class="btn btn-primary">Join Discussion</button>
+            
+            <div class="community-stats">
+                <div class="community-stat">
+                    <div class="stat-value">125K+</div>
+                    <div class="stat-label">Community Members</div>
+                </div>
+                <div class="community-stat">
+                    <div class="stat-value">1.2M+</div>
+                    <div class="stat-label">Monthly Discussions</div>
+                </div>
+                <div class="community-stat">
+                    <div class="stat-value">350+</div>
+                    <div class="stat-label">Daily Topics</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Layout -->
+        <div class="community-layout">
+            <!-- Main Content -->
+            <div class="community-main">
+                <!-- Forums -->
+                <h2 class="section-title">
+                    <i class="fas fa-comments"></i>
+                    Discussion Forums
+                </h2>
+                
+                <div class="forums-header">
+                    <h3>Browse by Category</h3>
+                    <button class="btn btn-outline">Start New Topic</button>
+                </div>
+                
+                <div class="forum-categories">
+                    <!-- General Discussion -->
+                    <div class="forum-card">
+                        <div class="forum-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="forum-title">General Discussion</h3>
+                        <p class="forum-desc">Talk about everything crypto-related - news, trends, and market movements.</p>
+                        <div class="forum-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-comment"></i>
+                                <span>24.5K Topics</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>Active Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trading & Investing -->
+                    <div class="forum-card">
+                        <div class="forum-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="forum-title">Trading & Investing</h3>
+                        <p class="forum-desc">Strategies, analysis, and tips for crypto trading and long-term investing.</p>
+                        <div class="forum-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-comment"></i>
+                                <span>18.2K Topics</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>Active Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blockchain Tech -->
+                    <div class="forum-card">
+                        <div class="forum-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3 class="forum-title">Blockchain Tech</h3>
+                        <p class="forum-desc">Deep dives into blockchain technology, protocols, and development.</p>
+                        <div class="forum-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-comment"></i>
+                                <span>9.7K Topics</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>Active Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFTs & Metaverse -->
+                    <div class="forum-card">
+                        <div class="forum-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="forum-title">NFTs & Metaverse</h3>
+                        <p class="forum-desc">Discuss digital art, collectibles, and the future of virtual worlds.</p>
+                        <div class="forum-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-comment"></i>
+                                <span>15.3K Topics</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>Active Now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Latest Discussions -->
+                <h2 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Latest Discussions
+                </h2>
+                
+                <!-- Discussion Thread 1 -->
+                <div class="discussion-thread">
+                    <div class="thread-header">
+                        <div class="thread-avatar">MJ</div>
+                        <div>
+                            <div class="thread-user">Max Johnson</div>
+                            <div class="thread-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <h3 class="thread-title">Bitcoin Halving Impact on Market - What to Expect</h3>
+                    <p class="thread-content">With the next Bitcoin halving approaching in April 2024, I've been analyzing historical data to predict potential market movements. In this post, I'll share my analysis of previous halving events and what they might mean for prices in 2024...</p>
+                    <div class="thread-footer">
+                        <div class="thread-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-comment"></i> 42
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i> 1.2K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart"></i> 87
+                            </div>
+                        </div>
+                        <div class="thread-tags">
+                            <span class="tag">Bitcoin</span>
+                            <span class="tag">Analysis</span>
+                            <span class="tag">Halving</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Discussion Thread 2 -->
+                <div class="discussion-thread">
+                    <div class="thread-header">
+                        <div class="thread-avatar">SC</div>
+                        <div>
+                            <div class="thread-user">Sarah Chen</div>
+                            <div class="thread-time">5 hours ago</div>
+                        </div>
+                    </div>
+                    <h3 class="thread-title">DeFi Summer 2.0? Emerging Projects to Watch</h3>
+                    <p class="thread-content">After the recent market recovery, I'm seeing exciting innovations in DeFi. In this post, I'll highlight 5 promising projects that could lead the next wave of decentralized finance innovation. From novel lending protocols to cross-chain solutions...</p>
+                    <div class="thread-footer">
+                        <div class="thread-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-comment"></i> 28
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i> 890
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart"></i> 64
+                            </div>
+                        </div>
+                        <div class="thread-tags">
+                            <span class="tag">DeFi</span>
+                            <span class="tag">Altcoins</span>
+                            <span class="tag">Innovation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Discussion Thread 3 -->
+                <div class="discussion-thread">
+                    <div class="thread-header">
+                        <div class="thread-avatar">TK</div>
+                        <div>
+                            <div class="thread-user">Tomiko Kawasaki</div>
+                            <div class="thread-time">Yesterday</div>
+                        </div>
+                    </div>
+                    <h3 class="thread-title">Complete Guide to Crypto Tax in 2024</h3>
+                    <p class="thread-content">With tax season approaching, I've compiled a comprehensive guide to cryptocurrency taxation. This guide covers everything from tracking transactions to reporting requirements in major jurisdictions. I'll also share some tools that can help simplify the process...</p>
+                    <div class="thread-footer">
+                        <div class="thread-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-comment"></i> 76
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i> 2.4K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart"></i> 142
+                            </div>
+                        </div>
+                        <div class="thread-tags">
+                            <span class="tag">Tax</span>
+                            <span class="tag">Guide</span>
+                            <span class="tag">Regulation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Discussion Thread 4 -->
+                <div class="discussion-thread">
+                    <div class="thread-header">
+                        <div class="thread-avatar">DE</div>
+                        <div>
+                            <div class="thread-user">Diego Estrada</div>
+                            <div class="thread-time">2 days ago</div>
+                        </div>
+                    </div>
+                    <h3 class="thread-title">My Journey: From $500 to $50K in 18 Months</h3>
+                    <p class="thread-content">I started my crypto journey with just $500 in January 2023. Today my portfolio stands at over $50K. In this post, I'll share the strategies, mistakes, and lessons that got me here. Not financial advice, just my personal experience...</p>
+                    <div class="thread-footer">
+                        <div class="thread-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-comment"></i> 124
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i> 8.7K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart"></i> 321
+                            </div>
+                        </div>
+                        <div class="thread-tags">
+                            <span class="tag">Journey</span>
+                            <span class="tag">Trading</span>
+                            <span class="tag">Portfolio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="community-sidebar">
+                <!-- Leaderboard -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-trophy"></i>
+                        Top Contributors
+                    </h3>
+                    
+                    <div class="leaderboard-item leaderboard-top">
+                        <div class="leaderboard-rank">1</div>
+                        <div class="leaderboard-avatar">CR</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">CryptoQueen</div>
+                            <div class="leaderboard-stats">
+                                <span>Posts: 2,421</span>
+                                <span>Solutions: 347</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-points">8,452 pts</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">2</div>
+                        <div class="leaderboard-avatar">BT</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">BlockTrain</div>
+                            <div class="leaderboard-stats">
+                                <span>Posts: 1,987</span>
+                                <span>Solutions: 284</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-points">7,215 pts</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">3</div>
+                        <div class="leaderboard-avatar">DW</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">DeFiWhale</div>
+                            <div class="leaderboard-stats">
+                                <span>Posts: 1,742</span>
+                                <span>Solutions: 312</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-points">6,843 pts</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">4</div>
+                        <div class="leaderboard-avatar">AS</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">AltcoinSniper</div>
+                            <div class="leaderboard-stats">
+                                <span>Posts: 1,532</span>
+                                <span>Solutions: 198</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-points">5,927 pts</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">5</div>
+                        <div class="leaderboard-avatar">SM</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">SatoshiMind</div>
+                            <div class="leaderboard-stats">
+                                <span>Posts: 1,423</span>
+                                <span>Solutions: 176</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-points">5,312 pts</div>
+                    </div>
+                </div>
+                
+                <!-- Trending Topics -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-fire"></i>
+                        Trending Topics
+                    </h3>
+                    
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link">
+                                <span>Ethereum ETF Approval Possibility</span>
+                                <span class="topic-stats">1.2K posts</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link">
+                                <span>Bitcoin Price Prediction 2024</span>
+                                <span class="topic-stats">980 posts</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link">
+                                <span>Solana vs Ethereum Debate</span>
+                                <span class="topic-stats">745 posts</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link">
+                                <span>Best Staking Platforms</span>
+                                <span class="topic-stats">642 posts</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link">
+                                <span>AI and Blockchain Integration</span>
+                                <span class="topic-stats">521 posts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Upcoming Events -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-calendar"></i>
+                        Upcoming Events
+                    </h3>
+                    
+                    <div class="event-item">
+                        <div class="event-date">May 15, 2024</div>
+                        <h4 class="event-title">Live AMA with Polygon Founder</h4>
+                        <p class="event-desc">Ask anything about Layer 2 solutions and future developments</p>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">May 22, 2024</div>
+                        <h4 class="event-title">Trading Workshop: Advanced Strategies</h4>
+                        <p class="event-desc">Learn advanced crypto trading techniques from experts</p>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">June 5, 2024</div>
+                        <h4 class="event-title">CryptoHub Community Meetup</h4>
+                        <p class="event-desc">Virtual meetup with networking and panel discussions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                      <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html" target="_blank" rel="noopener noreferrer">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

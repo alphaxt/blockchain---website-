@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Futures Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section - Futures */
+        .futures-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .futures-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+            z-index: -1;
+        }
+
+        .futures-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .futures-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .futures-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .futures-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .futures-stat {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1.2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .futures-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .futures-stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Futures Trading Section */
+        .futures-trading {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .trading-interface {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .trading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .trading-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .contract-selector {
+            display: flex;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .contract-option {
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contract-option.active {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .trading-chart {
+            height: 350px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1rem;
+            border-radius: 12px;
+            flex: 1;
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+
+        .price-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .price-change.positive {
+            color: var(--success);
+        }
+
+        .price-change.negative {
+            color: var(--danger);
+        }
+
+        .order-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .leverage-control {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .leverage-slider {
+            flex: 1;
+            appearance: none;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        .leverage-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .leverage-value {
+            min-width: 60px;
+            text-align: center;
+            background: rgba(108, 92, 231, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-buy {
+            background: linear-gradient(90deg, var(--success), #00d2a0);
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .btn-sell {
+            background: linear-gradient(90deg, var(--danger), #ff8a8a);
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        /* Positions & Orders */
+        .positions-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .positions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .positions-table th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--secondary);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .positions-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .position-side.long {
+            color: var(--success);
+        }
+
+        .position-side.short {
+            color: var(--danger);
+        }
+
+        .btn-close {
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            background: rgba(255, 118, 117, 0.1);
+        }
+
+        /* Features Section */
+        .features-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            text-align: center;
+        }
+
+        .features-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(108, 92, 231, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 92, 231, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .futures-trading {
+                grid-template-columns: 1fr;
+            }
+            
+            .futures-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .futures-content {
+                margin-bottom: 2rem;
+            }
+            
+            .futures-stats {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .futures-title {
+                font-size: 2.5rem;
+            }
+            
+            .price-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div> <!-- Added missing closing div for logo -->
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="futures.html" class="nav-link active">Futures</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="About.html" class="nav-link">About</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search futures contracts...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Futures Hero Section -->
+        <section class="futures-hero">
+            <div class="futures-content">
+                <h1 class="futures-title">Trade Crypto Futures with Leverage</h1>
+                <p class="futures-subtitle">Maximize your trading potential with up to 100x leverage on Bitcoin, Ethereum, and other top cryptocurrencies. Profit in both rising and falling markets.</p>
+                
+                <div class="futures-stats">
+                    <div class="futures-stat">
+                        <div class="futures-stat-value">$48.2B</div>
+                        <div class="futures-stat-label">24h Trading Volume</div>
+                    </div>
+                    <div class="futures-stat">
+                        <div class="futures-stat-value">125x</div>
+                        <div class="futures-stat-label">Maximum Leverage</div>
+                    </div>
+                    <div class="futures-stat">
+                        <div class="futures-stat-value">0.02%</div>
+                        <div class="futures-stat-label">Lowest Maker Fees</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="crypto-graphic">
+                    <canvas id="futuresChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Futures Trading Interface -->
+        <div class="futures-trading">
+            <div class="trading-interface">
+                <div class="trading-header">
+                    <h2 class="trading-title">BTC/USDT Perpetual</h2>
+                    <div class="contract-selector">
+                        <div class="contract-option active">Perpetual</div>
+                        <div class="contract-option">Quarterly</div>
+                        <div class="contract-option">Monthly</div>
+                    </div>
+                </div>
+                
+                <div class="trading-chart">
+                    <canvas id="tradingChart"></canvas>
+                </div>
+                
+                <div class="price-display">
+                    <div class="price-box">
+                        <div class="price-label">Last Price</div>
+                        <div class="price-value">$63,218.75</div>
+                        <div class="price-change positive">+1.85%</div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price-label">24h High</div>
+                        <div class="price-value">$63,745.20</div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price-label">24h Low</div>
+                        <div class="price-value">$61,328.40</div>
+                    </div>
+                </div>
+                
+                <div class="order-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Order Type</label>
+                            <select class="form-control">
+                                <option>Limit</option>
+                                <option>Market</option>
+                                <option>Stop Limit</option>
+                                <option>Stop Market</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Position</label>
+                            <select class="form-control">
+                                <option>Buy/Long</option>
+                                <option>Sell/Short</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Price (USDT)</label>
+                        <input type="text" class="form-control" value="63,200.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Amount (BTC)</label>
+                        <input type="text" class="form-control" value="0.1">
+                    </div>
+                    
+                    <div class="leverage-control">
+                        <label class="form-label">Leverage</label>
+                        <input type="range" min="1" max="125" value="20" class="leverage-slider" id="leverageSlider">
+                        <div class="leverage-value">20x</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Estimated Liquidation Price</label>
+                        <input type="text" class="form-control" value="$58,412.30" readonly>
+                    </div>
+                    
+                    <button class="btn btn-buy">Buy/Long</button>
+                    <button class="btn btn-sell">Sell/Short</button>
+                </div>
+            </div>
+            
+            <!-- Positions & Orders Panel -->
+            <div>
+                <div class="positions-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Open Positions</h2>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="positions-table">
+                            <thead>
+                                <tr>
+                                    <th>Contract</th>
+                                    <th>Side</th>
+                                    <th>Size</th>
+                                    <th>Entry Price</th>
+                                    <th>Liq. Price</th>
+                                    <th>PNL</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BTC/USDT</td>
+                                    <td class="position-side long">Long</td>
+                                    <td>0.5 BTC</td>
+                                    <td>$61,200.00</td>
+                                    <td>$58,412.30</td>
+                                    <td class="positive">+$1,009.38</td>
+                                    <td><button class="btn-close">Close</button></td>
+                                </tr>
+                                <tr>
+                                    <td>ETH/USDT</td>
+                                    <td class="position-side short">Short</td>
+                                    <td>2.0 ETH</td>
+                                    <td>$3,425.80</td>
+                                    <td>$3,512.40</td>
+                                    <td class="positive">+$82.50</td>
+                                    <td><button class="btn-close">Close</button></td>
+                                </tr>
+                                <tr>
+                                    <td>SOL/USDT</td>
+                                    <td class="position-side long">Long</td>
+                                    <td>15.0 SOL</td>
+                                    <td>$142.20</td>
+                                    <td>$132.80</td>
+                                    <td class="negative">-$36.75</td>
+                                    <td><button class="btn-close">Close</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="positions-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Open Orders</h2>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="positions-table">
+                            <thead>
+                                <tr>
+                                    <th>Contract</th>
+                                    <th>Type</th>
+                                    <th>Side</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BTC/USDT</td>
+                                    <td>Limit</td>
+                                    <td class="position-side long">Long</td>
+                                    <td>$62,800.00</td>
+                                    <td>0.2 BTC</td>
+                                    <td><button class="btn-close">Cancel</button></td>
+                                </tr>
+                                <tr>
+                                    <td>ETH/USDT</td>
+                                    <td>Stop Limit</td>
+                                    <td class="position-side short">Short</td>
+                                    <td>$3,450.00</td>
+                                    <td>1.5 ETH</td>
+                                    <td><button class="btn-close">Cancel</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="features-title">Why Trade Futures on CryptoHub?</h2>
+            <p class="about-content">
+                Our futures platform is engineered for performance and reliability, with industry-leading features to help you trade smarter.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="feature-title">High Leverage</h3>
+                    <p>Trade with up to 125x leverage to maximize your potential returns on both long and short positions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Risk Controls</h3>
+                    <p>Set stop-loss and take-profit orders to manage your risk effectively and protect your capital.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Ultra-Low Latency</h3>
+                    <p>Our matching engine processes orders in less than 1ms, ensuring you get the best prices.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3 class="feature-title">Competitive Fees</h3>
+                    <p>Enjoy the lowest fees in the industry with maker rebates and competitive taker fees.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Professional Tools</h3>
+                    <p>Advanced charting, technical indicators, and market depth visualization for informed trading.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Trading</h3>
+                    <p>Trade futures on the go with our iOS and Android apps. Never miss a trading opportunity.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html" class="active">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero chart
+            const heroCtx = document.getElementById('futuresChart').getContext('2d');
+            new Chart(heroCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'BTC Futures',
+                        data: [38000, 42000, 52000, 61000, 69000, 63000],
+                        borderColor: '#00cec9',
+                        backgroundColor: 'rgba(0, 206, 201, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Trading chart
+            const tradingCtx = document.getElementById('tradingChart').getContext('2d');
+            new Chart(tradingCtx, {
+                type: 'line',
+                data: {
+                    labels: Array(30).fill('').map((_, i) => `${i+1}m`),
+                    datasets: [{
+                        label: 'BTC/USDT',
+                        data: Array(30).fill(0).map(() => Math.random() * 2000 + 61000),
+                        borderColor: '#6c5ce7',
+                        backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Leverage slider
+            const leverageSlider = document.getElementById('leverageSlider');
+            const leverageValue = document.querySelector('.leverage-value');
+            
+            leverageSlider.addEventListener('input', function() {
+                leverageValue.textContent = this.value + 'x';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Earn Crypto Rewards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section - Earn */
+        .earn-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .earn-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+            z-index: -1;
+        }
+
+        .earn-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .earn-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .earn-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .earn-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .earn-stat {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1.2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .earn-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .earn-stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Earn Methods Section */
+        .earn-methods {
+            margin: 4rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(108, 92, 231, 0.4);
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .method-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .method-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-desc {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .apy-badge {
+            display: inline-block;
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .method-features li i {
+            color: var(--accent);
+        }
+
+        /* Staking Section */
+        .staking-section {
+            margin: 4rem 0;
+        }
+
+        .coins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .coin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .coin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .coin-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .coin-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .coin-symbol {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .coin-apy {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .coin-apy-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .calculator-result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 4rem 0;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .faq-answer {
+            color: var(--secondary);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            margin-top: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .earn-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .earn-content {
+                margin-bottom: 2rem;
+            }
+            
+            .earn-stats {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .earn-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+           <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="futures.html" class="nav-link">Futures</a>
+            <a href="earn.html" class="nav-link active">Earn</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search earn opportunities...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Earn Hero Section -->
+        <section class="earn-hero">
+            <div class="earn-content">
+                <h1 class="earn-title">Grow Your Crypto Assets</h1>
+                <p class="earn-subtitle">Earn passive income on your cryptocurrency holdings with industry-leading APY. Secure, flexible, and effortless.</p>
+                
+                <div class="earn-stats">
+                    <div class="earn-stat">
+                        <div class="earn-stat-value">12.5%</div>
+                        <div class="earn-stat-label">Average APY</div>
+                    </div>
+                    <div class="earn-stat">
+                        <div class="earn-stat-value">$5.2B</div>
+                        <div class="earn-stat-label">Assets Earning</div>
+                    </div>
+                    <div class="earn-stat">
+                        <div class="earn-stat-value">1.5M+</div>
+                        <div class="earn-stat-label">Active Earn Users</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1620336655052-b57986f5a26a?q=80&w=500&auto=format&fit=crop" alt="Crypto Growth" style="width: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            </div>
+        </section>
+
+        <!-- Earn Methods Section -->
+        <section class="earn-methods">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Earn Methods
+                </h2>
+                <p>Choose how you want to grow your assets</p>
+            </div>
+            
+            <div class="methods-grid">
+                <!-- Staking Card -->
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="apy-badge">UP TO 15% APY</div>
+                    <h3 class="method-title">Staking</h3>
+                    <p class="method-desc">Lock your crypto to support blockchain networks and earn rewards.</p>
+                    <ul class="method-features">
+                        <li><i class="fas fa-check-circle"></i> Secure network participation</li>
+                        <li><i class="fas fa-check-circle"></i> Competitive returns</li>
+                        <li><i class="fas fa-check-circle"></i> Flexible lock periods</li>
+                    </ul>
+                    <button class="btn btn-primary">Start Staking</button>
+                </div>
+                
+                <!-- Savings Card -->
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="apy-badge">UP TO 10% APY</div>
+                    <h3 class="method-title">Savings</h3>
+                    <p class="method-desc">Earn daily interest on your crypto with flexible withdrawals.</p>
+                    <ul class="method-features">
+                        <li><i class="fas fa-check-circle"></i> No lock-up period</li>
+                        <li><i class="fas fa-check-circle"></i> Daily compounding</li>
+                        <li><i class="fas fa-check-circle"></i> Insured assets</li>
+                    </ul>
+                    <button class="btn btn-primary">Start Saving</button>
+                </div>
+                
+                <!-- Lending Card -->
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="apy-badge">UP TO 8% APY</div>
+                    <h3 class="method-title">Lending</h3>
+                    <p class="method-desc">Lend your crypto to verified borrowers and earn interest.</p>
+                    <ul class="method-features">
+                        <li><i class="fas fa-check-circle"></i> Collateralized loans</li>
+                        <li><i class="fas fa-check-circle"></i> Flexible terms</li>
+                        <li><i class="fas fa-check-circle"></i> Automated matching</li>
+                    </ul>
+                    <button class="btn btn-primary">Start Lending</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staking Section -->
+        <section class="staking-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-coins"></i>
+                    Popular Staking Coins
+                </h2>
+                <p>Earn rewards on your favorite cryptocurrencies</p>
+            </div>
+            
+            <div class="coins-grid">
+                <!-- Bitcoin -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <h3 class="coin-name">Bitcoin</h3>
+                    <div class="coin-symbol">BTC</div>
+                    <div class="coin-apy">6.25%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+                
+                <!-- Ethereum -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fab fa-ethereum"></i>
+                    </div>
+                    <h3 class="coin-name">Ethereum</h3>
+                    <div class="coin-symbol">ETH</div>
+                    <div class="coin-apy">7.8%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+                
+                <!-- Cardano -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="coin-name">Cardano</h3>
+                    <div class="coin-symbol">ADA</div>
+                    <div class="coin-apy">12.5%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+                
+                <!-- Solana -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="coin-name">Solana</h3>
+                    <div class="coin-symbol">SOL</div>
+                    <div class="coin-apy">15.3%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+                
+                <!-- Polkadot -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    <h3 class="coin-name">Polkadot</h3>
+                    <div class="coin-symbol">DOT</div>
+                    <div class="coin-apy">14.2%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+                
+                <!-- Polygon -->
+                <div class="coin-card">
+                    <div class="coin-icon">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <h3 class="coin-name">Polygon</h3>
+                    <div class="coin-symbol">MATIC</div>
+                    <div class="coin-apy">11.8%</div>
+                    <div class="coin-apy-label">Annual Percentage Yield</div>
+                    <button class="btn btn-outline">Stake Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="calculator-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-calculator"></i>
+                    Earnings Calculator
+                </h2>
+                <p>See how much you could earn</p>
+            </div>
+            
+            <div class="calculator-grid">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label class="form-label">Select Asset</label>
+                        <select class="form-control">
+                            <option>Bitcoin (BTC)</option>
+                            <option>Ethereum (ETH)</option>
+                            <option>Cardano (ADA)</option>
+                            <option>Solana (SOL)</option>
+                            <option>Polkadot (DOT)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Amount to Stake</label>
+                        <input type="text" class="form-control" placeholder="0.00" value="1.0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">APY (%)</label>
+                        <input type="text" class="form-control" value="12.5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Staking Period</label>
+                        <select class="form-control">
+                            <option>30 days</option>
+                            <option>90 days</option>
+                            <option>180 days</option>
+                            <option>1 year</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="calculator-result">
+                    <div class="result-value">0.125 BTC</div>
+                    <div class="result-label">Estimated Earnings</div>
+                    <div style="margin-top: 2rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Initial Investment:</span>
+                            <span>1.0 BTC</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Total Earnings:</span>
+                            <span>0.125 BTC</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Total Value:</span>
+                            <span>1.125 BTC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-question-circle"></i>
+                    Frequently Asked Questions
+                </h2>
+                <p>Everything you need to know about earning with CryptoHub</p>
+            </div>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does crypto staking work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Staking involves participating in blockchain transaction validation. By locking your crypto, you help secure the network and earn rewards in return. The more you stake, the more rewards you earn.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is staking safe?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, staking on CryptoHub is secure. We use industry-leading security measures including cold storage for assets and multi-factor authentication. Your staked assets are insured against theft.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I unstake my assets at any time?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Most assets have flexible staking with no lock-up period. For higher APY options, we offer fixed terms from 30 days to 1 year. Early unstaking may incur a small fee.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How often are rewards paid?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Rewards are paid daily and compounded automatically. You can track your earnings in real-time through your CryptoHub dashboard.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are there any fees for earning?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        CryptoHub charges a small 5% fee on staking rewards. There are no fees for savings accounts or lending. All fees are clearly displayed before you commit.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title">Start Earning Today</h2>
+            <p class="cta-text">Join millions of CryptoHub users earning passive income on their crypto assets. Secure, reliable, and easy to use.</p>
+            <button class="btn btn-primary" style="background: var(--darker); color: var(--light);">Get Started</button>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                   <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="earn.html" class="active">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // FAQ toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Toggle active class on clicked item
+                    this.classList.toggle('active');
+                    
+                    // Close other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Simulate calculator functionality
+            const calculatorForm = document.querySelector('.calculator-form');
+            const resultValue = document.querySelector('.result-value');
+            
+            calculatorForm.addEventListener('input', function() {
+                // This would be replaced with actual calculation logic
+                resultValue.textContent = '0.125 BTC';
+            });
+        });
+    </script>
+</body>
+</html>

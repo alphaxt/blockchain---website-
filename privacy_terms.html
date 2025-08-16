@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Privacy Policy & Terms of Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --vibrant-1: #fd79a8;
+            --vibrant-2: #55efc4;
+            --vibrant-3: #ffeaa7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f1729, #1a243f);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--vibrant-1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        /* Main Container */
+        .legal-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar Navigation */
+        .legal-nav {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .legal-nav h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .legal-nav ul {
+            list-style: none;
+        }
+
+        .legal-nav li {
+            margin-bottom: 0.8rem;
+        }
+
+        .legal-nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .legal-nav a:hover, .legal-nav a.active {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--light);
+        }
+
+        /* Legal Content */
+        .legal-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .legal-header {
+            margin-bottom: 2rem;
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .legal-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--accent), var(--vibrant-1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .legal-section {
+            margin-bottom: 3rem;
+        }
+
+        .legal-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .legal-section h2:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--vibrant-1);
+        }
+
+        .legal-section p {
+            margin-bottom: 1.2rem;
+            color: #d0d0e0;
+            line-height: 1.8;
+        }
+
+        .legal-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .legal-section li {
+            margin-bottom: 1rem;
+            color: #d0d0e0;
+        }
+
+        .highlight {
+            background: rgba(108, 92, 231, 0.15);
+            border-left: 3px solid var(--vibrant-1);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .update-date {
+            font-style: italic;
+            color: var(--secondary);
+            margin-top: 2rem;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .legal-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+            padding-bottom: 1rem;
+        }
+
+        .legal-tab {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .legal-tab.active {
+            background: linear-gradient(90deg, var(--primary), var(--vibrant-1));
+            color: white;
+        }
+
+        .legal-tab:hover:not(.active) {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .legal-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .legal-nav {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .legal-content {
+                padding: 1.5rem;
+            }
+            
+            .legal-header h1 {
+                font-size: 2rem;
+            }
+            
+            .legal-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="About.html" class="nav-link">About</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search coins...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="legal-container">
+        <!-- Sidebar Navigation -->
+        <div class="legal-nav">
+            <h3>Legal Documents</h3>
+            <ul>
+                <li><a href="#" class="active">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">AML Policy</a></li>
+                <li><a href="#">Risk Disclosure</a></li>
+            </ul>
+        </div>
+        
+        <!-- Legal Content -->
+        <div class="legal-content">
+            <div class="legal-tabs">
+                <div class="legal-tab active">Privacy Policy</div>
+                <div class="legal-tab">Terms of Service</div>
+            </div>
+            
+            <div class="legal-header">
+                <h1>Privacy Policy</h1>
+                <p>Last updated: May 31, 2025</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Introduction</h2>
+                <p>Welcome to CryptoHub ("we", "our", or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p>
+                <p>If you have any questions or concerns about this privacy notice, or our practices with regards to your personal information, please contact us at privacy@cryptohub.com.</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Information We Collect</h2>
+                <p>We collect personal information that you voluntarily provide to us when you register on the platform, express an interest in obtaining information about us or our products and services, when you participate in activities on the platform, or otherwise when you contact us.</p>
+                
+                <p>The personal information we collect may include the following:</p>
+                <ul>
+                    <li><strong>Personal Identifiers:</strong> Name, email address, phone number, date of birth, government ID, and similar contact data.</li>
+                    <li><strong>Financial Information:</strong> Bank account details, cryptocurrency wallet addresses, transaction history, and trading activity.</li>
+                    <li><strong>Technical Data:</strong> IP address, browser type, device information, operating system, and usage data.</li>
+                    <li><strong>Biometric Data:</strong> When required for identity verification, we may collect facial recognition data.</li>
+                </ul>
+            </div>
+            
+            <div class="legal-section">
+                <h2>How We Use Your Information</h2>
+                <p>We use personal information collected via our platform for a variety of business purposes described below:</p>
+                
+                <ul>
+                    <li><strong>To facilitate account creation and authentication</strong></li>
+                    <li><strong>To process transactions and prevent fraudulent activity</strong></li>
+                    <li><strong>To comply with legal obligations (KYC/AML regulations)</strong></li>
+                    <li><strong>To send administrative information to you</strong></li>
+                    <li><strong>To protect our services and enforce our terms</strong></li>
+                    <li><strong>To deliver targeted marketing and promotional communications</strong></li>
+                </ul>
+                
+                <div class="highlight">
+                    <p><strong>Note:</strong> We do not sell your personal information to third parties. We may share information with trusted partners only to provide our services, comply with laws, or protect our rights.</p>
+                </div>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Data Security</h2>
+                <p>We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure.</p>
+                
+                <p>We protect your information using:</p>
+                <ul>
+                    <li>Advanced encryption protocols (AES-256)</li>
+                    <li>Multi-factor authentication requirements</li>
+                    <li>Secure cold storage for cryptocurrency assets</li>
+                    <li>Regular security audits and penetration testing</li>
+                    <li>Distributed denial-of-service (DDoS) protection</li>
+                </ul>
+            </div>
+            
+            <div class="legal-section">
+                <h2>International Data Transfers</h2>
+                <p>Your information, including personal data, may be transferred to — and maintained on — computers located outside of your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those of your jurisdiction.</p>
+                
+                <p>We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy.</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Your Privacy Rights</h2>
+                <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+                
+                <ul>
+                    <li><strong>Access:</strong> Request access to your personal information.</li>
+                    <li><strong>Correction:</strong> Request correction of inaccurate personal information.</li>
+                    <li><strong>Deletion:</strong> Request deletion of your personal information.</li>
+                    <li><strong>Objection:</strong> Object to processing of your personal information.</li>
+                    <li><strong>Portability:</strong> Request transfer of your personal information.</li>
+                    <li><strong>Withdraw Consent:</strong> Withdraw your consent at any time.</li>
+                </ul>
+                
+                <p>To exercise these rights, please contact us at privacy@cryptohub.com. We will respond to your request within 30 days.</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Cookies and Tracking Technologies</h2>
+                <p>We use cookies and similar tracking technologies to access or store information. Specific information about how we use such technologies and how you can refuse certain cookies is set out in our Cookie Policy.</p>
+            </div>
+            
+            <div class="update-date">
+                <p>This Privacy Policy was last updated on May 31, 2025.</p>
+            </div>
+            
+            <!-- Terms of Service Content (Hidden by default) -->
+            <div class="legal-content-tos" style="display: none;">
+                <div class="legal-header">
+                    <h1>Terms of Service</h1>
+                    <p>Last updated: May 31, 2025</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Acceptance of Terms</h2>
+                    <p>By accessing or using any services provided by CryptoHub ("we", "us", or "our"), you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not access or use our services.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Eligibility</h2>
+                    <p>To be eligible to use our services, you must:</p>
+                    <ul>
+                        <li>Be at least 18 years of age</li>
+                        <li>Not be a resident of any restricted jurisdictions</li>
+                        <li>Not be on any trade or economic sanctions lists</li>
+                        <li>Complete our identity verification process</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Account Registration</h2>
+                    <p>To access certain features of our services, you must create an account. You agree to:</p>
+                    <ul>
+                        <li>Provide accurate and complete information</li>
+                        <li>Maintain the security of your account credentials</li>
+                        <li>Promptly update any information that changes</li>
+                        <li>Accept responsibility for all activities under your account</li>
+                    </ul>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Prohibited Activities</h2>
+                    <p>You agree not to engage in any of the following prohibited activities:</p>
+                    <ul>
+                        <li>Money laundering or terrorist financing</li>
+                        <li>Market manipulation or abusive trading practices</li>
+                        <li>Accessing our services using automated means without permission</li>
+                        <li>Violating any laws, regulations, or third-party rights</li>
+                        <li>Distributing malware or interfering with our services</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p><strong>Important:</strong> We reserve the right to suspend or terminate accounts engaging in prohibited activities without notice.</p>
+                    </div>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Fees and Payments</h2>
+                    <p>You agree to pay all applicable fees for transactions conducted on our platform. Our current fee schedule is available on our Fees page. We reserve the right to adjust our fees at any time, with changes communicated at least 30 days in advance.</p>
+                </div>
+                
+                <div class="legal-section">
+                    <h2>Intellectual Property</h2>
+                    <p>All content included on our platform, such as text, graphics, logos, images, and software, is our property or the property of our licensors and is protected by copyright and other intellectual property laws.</p>
+                </div>
+                
+                <div class="update-date">
+                    <p>These Terms of Service were last updated on May 31, 2025.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                   <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                     <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html" class="active">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.legal-tab');
+            const privacyContent = document.querySelector('.legal-content > div:not(.legal-tabs):not(.legal-content-tos)');
+            const tosContent = document.querySelector('.legal-content-tos');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Toggle content visibility
+                    if (this.textContent === 'Privacy Policy') {
+                        privacyContent.style.display = 'block';
+                        tosContent.style.display = 'none';
+                    } else {
+                        privacyContent.style.display = 'none';
+                        tosContent.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

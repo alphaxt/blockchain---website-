@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Modern Cryptocurrency Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(18, 24, 38, 0.95);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--light);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-results a:hover {
+            background: rgba(108, 92, 231, 0.3);
+            color: var(--accent);
+        }
+
+        .search-results a:last-child {
+            border-bottom: none;
+        }
+
+        .search-results .coin-icon {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Coin Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+        }
+
+        .modal-title .coin-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.8rem;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .coin-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .coin-price-large {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .coin-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .coin-chart-large {
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .crypto-graphic {
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        /* Trending Section */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trending-coins {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .coin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            cursor: pointer;
+        }
+
+        .coin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .coin-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .coin-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .coin-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .coin-symbol {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .coin-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .coin-change {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .positive {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .negative {
+            background: rgba(255, 118, 117, 0.2);
+            color: var(--danger);
+        }
+
+        .coin-chart {
+            height: 80px;
+            margin-top: 1.2rem;
+        }
+
+        /* Wallet & Dashboard */
+        .wallet-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .wallet-balance {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .wallet-actions {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .wallet-btn {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-btn:hover {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .wallet-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        /* Portfolio */
+        .portfolio {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .portfolio-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-chart {
+            height: 250px;
+            margin-top: 1rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            text-align: center;
+        }
+
+        .about-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(108, 92, 231, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .coin-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-container {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .crypto-graphic {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+            }
+            
+            .modal-content {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+           <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="About.html" class="nav-link">About</a>
+        </nav>
+        
+        <div class="search-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search coins...">
+            </div>
+            <div class="search-results" id="searchResults">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+        
+        <div class="user-actions">
+            <a href="connectwallet.html" style="text-decoration: none;">
+                <button class="btn btn-outline">Connect Wallet</button>
+            </a>
+            <div class="user-profile">
+                <a href="profile.html" style="text-decoration: none; color: inherit;">
+                    <div class="avatar">JD</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">The Future of Digital Assets is Here</h1>
+                <p class="hero-subtitle">Trade, track, and manage your cryptocurrency portfolio with our advanced platform. Secure, intuitive, and built for the modern crypto investor.</p>
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">$2.1T</div>
+                        <div class="stat-label">Market Cap</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">24,000+</div>
+                        <div class="stat-label">Cryptocurrencies</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">350M+</div>
+                        <div class="stat-label">Users Worldwide</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="crypto-graphic">
+                    <canvas id="heroChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Coins Section -->
+        <section>
+            <h2 class="section-title">
+                <i class="fas fa-fire"></i>
+                Trending Cryptocurrencies
+            </h2>
+            
+            <div class="trending-coins">
+                <!-- Bitcoin -->
+                <div class="coin-card" data-coin="bitcoin">
+                    <div class="coin-header">
+                        <div class="coin-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Bitcoin</div>
+                            <div class="coin-symbol">BTC</div>
+                        </div>
+                    </div>
+                    <div class="coin-price">$61,842.75</div>
+                    <div class="coin-change positive">+3.2%</div>
+                    <div class="coin-chart">
+                        <canvas id="btcChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Ethereum -->
+                <div class="coin-card" data-coin="ethereum">
+                    <div class="coin-header">
+                        <div class="coin-icon">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Ethereum</div>
+                            <div class="coin-symbol">ETH</div>
+                        </div>
+                    </div>
+                    <div class="coin-price">$3,412.56</div>
+                    <div class="coin-change positive">+1.8%</div>
+                    <div class="coin-chart">
+                        <canvas id="ethChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Cardano -->
+                <div class="coin-card" data-coin="cardano">
+                    <div class="coin-header">
+                        <div class="coin-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Cardano</div>
+                            <div class="coin-symbol">ADA</div>
+                        </div>
+                    </div>
+                    <div class="coin-price">$0.4621</div>
+                    <div class="coin-change negative">-0.7%</div>
+                    <div class="coin-chart">
+                        <canvas id="adaChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Solana -->
+                <div class="coin-card" data-coin="solana">
+                    <div class="coin-header">
+                        <div class="coin-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Solana</div>
+                            <div class="coin-symbol">SOL</div>
+                        </div>
+                    </div>
+                    <div class="coin-price">$142.35</div>
+                    <div class="coin-change positive">+5.6%</div>
+                    <div class="coin-chart">
+                        <canvas id="solChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard -->
+        <div class="dashboard-grid">
+            <div>
+                <!-- Wallet Section -->
+                <section class="wallet-section">
+                    <a href="wallet.html" style="text-decoration: none; color: inherit;">
+                    <div class="wallet-header">
+                        <div>
+                            <h2>My Wallet</h2>
+                            <p>Total balance</p>
+                        </div>
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="wallet-balance">$24,568.90</div>
+                    <div class="wallet-actions">
+                        <div class="wallet-btn">
+                            <i class="fas fa-arrow-down"></i>
+                            <div>Deposit</div>
+                        </div>
+                        <div class="wallet-btn">
+                            <i class="fas fa-arrow-up"></i>
+                            <div>Withdraw</div>
+                        </div>
+                        <div class="wallet-btn">
+                            <i class="fas fa-exchange-alt"></i>
+                            <div>Swap</div>
+                        </div>
+                        <div class="wallet-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            <div>Send</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Portfolio Chart -->
+                <section class="portfolio">
+                    <div class="portfolio-header">
+                        <h2>Portfolio Performance</h2>
+                        <div>
+                            <select>
+                                <option>7 Days</option>
+                                <option>30 Days</option>
+                                <option>90 Days</option>
+                                <option>1 Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="portfolio-chart">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Asset Allocation -->
+            <section class="portfolio">
+                <h2>Asset Allocation</h2>
+                <div class="portfolio-chart">
+                    <canvas id="allocationChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <h2 class="about-title">Why Choose CryptoHub?</h2>
+            <p class="about-content">
+                CryptoHub is designed for both beginners and experienced traders. Our platform combines cutting-edge technology with intuitive design to provide the best cryptocurrency trading experience. With industry-leading security, real-time data, and a comprehensive suite of tools, we empower you to take control of your digital assets.
+            </p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Bank-Level Security</h3>
+                    <p>Multi-layer encryption and cold storage for maximum protection.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast Trades</h3>
+                    <p>Execute trades in milliseconds with our high-performance engine.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Analytics</h3>
+                    <p>Professional charting tools and real-time market data.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Optimized</h3>
+                    <p>Trade on the go with our iOS and Android apps.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html" target="_blank" rel="noopener noreferrer">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Coin Detail Modal -->
+    <div class="modal" id="coinModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalCoinTitle">
+                    <!-- Coin name and icon will be inserted here -->
+                </div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="coin-price-large" id="modalCoinPrice"></div>
+                <div class="coin-change" id="modalCoinChange"></div>
+                
+                <div class="coin-chart-large">
+                    <canvas id="modalCoinChart"></canvas>
+                </div>
+                
+                <div class="coin-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Market Cap</div>
+                        <div class="stat-value" id="modalMarketCap"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Volume (24h)</div>
+                        <div class="stat-value" id="modalVolume"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Circulating Supply</div>
+                        <div class="stat-value" id="modalSupply"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">All-Time High</div>
+                        <div class="stat-value" id="modalATH"></div>
+                    </div>
+                </div>
+                
+                <div class="about-content" id="modalDescription"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Coin database
+        const coins = [
+            {
+                id: 'bitcoin',
+                name: 'Bitcoin',
+                symbol: 'BTC',
+                icon: 'fab fa-bitcoin',
+                price: '$61,842.75',
+                change: '+3.2%',
+                changeClass: 'positive',
+                marketCap: '$1.2 Trillion',
+                volume: '$42.5 Billion',
+                supply: '19.6 Million BTC',
+                ath: '$69,044.77',
+                description: 'Bitcoin is the first decentralized cryptocurrency. Nodes in the peer-to-peer bitcoin network verify transactions through cryptography and record them in a public distributed ledger, called a blockchain.'
+            },
+            {
+                id: 'ethereum',
+                name: 'Ethereum',
+                symbol: 'ETH',
+                icon: 'fab fa-ethereum',
+                price: '$3,412.56',
+                change: '+1.8%',
+                changeClass: 'positive',
+                marketCap: '$408.7 Billion',
+                volume: '$18.3 Billion',
+                supply: '122.4 Million ETH',
+                ath: '$4,891.70',
+                description: 'Ethereum is a decentralized, open-source blockchain with smart contract functionality. Ether is the native cryptocurrency of the platform. It is the second-largest cryptocurrency by market capitalization.'
+            },
+            {
+                id: 'cardano',
+                name: 'Cardano',
+                symbol: 'ADA',
+                icon: 'fas fa-chart-line',
+                price: '$0.4621',
+                change: '-0.7%',
+                changeClass: 'negative',
+                marketCap: '$16.4 Billion',
+                volume: '$340 Million',
+                supply: '35.5 Billion ADA',
+                ath: '$3.10',
+                description: 'Cardano is a proof-of-stake blockchain platform that says its goal is to allow "changemakers, innovators, and visionaries" to bring about positive global change.'
+            },
+            {
+                id: 'solana',
+                name: 'Solana',
+                symbol: 'SOL',
+                icon: 'fas fa-bolt',
+                price: '$142.35',
+                change: '+5.6%',
+                changeClass: 'positive',
+                marketCap: '$63.2 Billion',
+                volume: '$2.8 Billion',
+                supply: '444.1 Million SOL',
+                ath: '$260.06',
+                description: 'Solana is a public blockchain platform with smart contract functionality. Its native cryptocurrency is SOL. Solana is known for its fast transaction speeds and low fees.'
+            },
+            {
+                id: 'ripple',
+                name: 'Ripple',
+                symbol: 'XRP',
+                icon: 'fas fa-waves',
+                price: '$0.5328',
+                change: '+0.9%',
+                changeClass: 'positive',
+                marketCap: '$29.3 Billion',
+                volume: '$1.2 Billion',
+                supply: '55.0 Billion XRP',
+                ath: '$3.84',
+                description: 'Ripple is a real-time gross settlement system, currency exchange and remittance network created by Ripple Labs Inc., a US-based technology company.'
+            },
+            {
+                id: 'dogecoin',
+                name: 'Dogecoin',
+                symbol: 'DOGE',
+                icon: 'fas fa-dog',
+                price: '$0.1285',
+                change: '+2.4%',
+                changeClass: 'positive',
+                marketCap: '$18.5 Billion',
+                volume: '$890 Million',
+                supply: '144.2 Billion DOGE',
+                ath: '$0.7376',
+                description: 'Dogecoin is a cryptocurrency created by software engineers Billy Markus and Jackson Palmer, who decided to create a payment system as a joke, making fun of the wild speculation in cryptocurrencies at the time.'
+            },
+            {
+                id: 'polkadot',
+                name: 'Polkadot',
+                symbol: 'DOT',
+                icon: 'fas fa-circle-nodes',
+                price: '$6.89',
+                change: '-1.2%',
+                changeClass: 'negative',
+                marketCap: '$9.8 Billion',
+                volume: '$240 Million',
+                supply: '1.4 Billion DOT',
+                ath: '$55.00',
+                description: 'Polkadot is a blockchain platform and cryptocurrency. It is designed to support various interconnected, application-specific sub-chains called parachains.'
+            },
+            {
+                id: 'litecoin',
+                name: 'Litecoin',
+                symbol: 'LTC',
+                icon: 'fas fa-coins',
+                price: '$78.42',
+                change: '+0.4%',
+                changeClass: 'positive',
+                marketCap: '$5.8 Billion',
+                volume: '$420 Million',
+                supply: '74.3 Million LTC',
+                ath: '$412.96',
+                description: 'Litecoin is a peer-to-peer cryptocurrency and open-source software project released under the MIT/X11 license. Creation and transfer of coins is based on an open source cryptographic protocol.'
+            }
+        ];
+
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const coinModal = document.getElementById('coinModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            searchResults.innerHTML = '';
+            
+            if (searchTerm.length > 0) {
+                const filteredCoins = coins.filter(coin => 
+                    coin.name.toLowerCase().includes(searchTerm) || 
+                    coin.symbol.toLowerCase().includes(searchTerm)
+                );
+                
+                if (filteredCoins.length > 0) {
+                    filteredCoins.forEach(coin => {
+                        const coinElement = document.createElement('a');
+                        coinElement.href = '#';
+                        coinElement.innerHTML = `
+                            <div class="coin-icon">
+                                <i class="${coin.icon}"></i>
+                            </div>
+                            <div>
+                                <div>${coin.name}</div>
+                                <div class="coin-symbol">${coin.symbol}</div>
+                            </div>
+                        `;
+                        coinElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            showCoinDetails(coin);
+                        });
+                        searchResults.appendChild(coinElement);
+                    });
+                    searchResults.style.display = 'block';
+                } else {
+                    const noResults = document.createElement('a');
+                    noResults.innerHTML = 'No coins found';
+                    noResults.style.pointerEvents = 'none';
+                    noResults.style.color = 'var(--secondary)';
+                    searchResults.appendChild(noResults);
+                    searchResults.style.display = 'block';
+                }
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Show coin details modal
+        function showCoinDetails(coin) {
+            const modalTitle = document.getElementById('modalCoinTitle');
+            const modalPrice = document.getElementById('modalCoinPrice');
+            const modalChange = document.getElementById('modalCoinChange');
+            const modalMarketCap = document.getElementById('modalMarketCap');
+            const modalVolume = document.getElementById('modalVolume');
+            const modalSupply = document.getElementById('modalSupply');
+            const modalATH = document.getElementById('modalATH');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            // Update modal content
+            modalTitle.innerHTML = `
+                <div class="coin-icon">
+                    <i class="${coin.icon}"></i>
+                </div>
+                <div>
+                    <div>${coin.name}</div>
+                    <div class="coin-symbol">${coin.symbol}</div>
+                </div>
+            `;
+            
+            modalPrice.textContent = coin.price;
+            modalChange.textContent = coin.change;
+            modalChange.className = `coin-change ${coin.changeClass}`;
+            modalMarketCap.textContent = coin.marketCap;
+            modalVolume.textContent = coin.volume;
+            modalSupply.textContent = coin.supply;
+            modalATH.textContent = coin.ath;
+            modalDescription.textContent = coin.description;
+            
+            // Show modal
+            coinModal.style.display = 'flex';
+            
+            // Create chart for modal
+            const chartCtx = document.getElementById('modalCoinChart').getContext('2d');
+            const chartData = [];
+            for (let i = 0; i < 30; i++) {
+                chartData.push(Math.random() * 100 + (coin.changeClass === 'positive' ? 300 : 200));
+            }
+            
+            new Chart(chartCtx, {
+                type: 'line',
+                data: {
+                    labels: Array(30).fill(''),
+                    datasets: [{
+                        data: chartData,
+                        borderColor: coin.changeClass === 'positive' ? '#00cec9' : '#ff7675',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.3,
+                        fill: {
+                            target: 'origin',
+                            above: coin.changeClass === 'positive' ? 'rgba(0, 206, 201, 0.1)' : 'rgba(255, 118, 117, 0.1)',
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            coinModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === coinModal) {
+                coinModal.style.display = 'none';
+            }
+        });
+
+        // Add event listeners to coin cards
+        document.querySelectorAll('.coin-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const coinId = this.getAttribute('data-coin');
+                const coin = coins.find(c => c.id === coinId);
+                if (coin) showCoinDetails(coin);
+            });
+        });
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero chart
+            const heroCtx = document.getElementById('heroChart').getContext('2d');
+            new Chart(heroCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Market Growth',
+                        data: [12000, 19000, 15000, 28000, 22000, 35000],
+                        borderColor: '#00cec9',
+                        backgroundColor: 'rgba(0, 206, 201, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Portfolio chart
+            const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+            new Chart(portfolioCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Portfolio Value',
+                        data: [15000, 16200, 15800, 17200, 18500, 24500],
+                        borderColor: '#6c5ce7',
+                        backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Allocation chart
+            const allocationCtx = document.getElementById('allocationChart').getContext('2d');
+            new Chart(allocationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Bitcoin', 'Ethereum', 'Cardano', 'Solana', 'Other'],
+                    datasets: [{
+                        data: [45, 25, 10, 15, 5],
+                        backgroundColor: [
+                            '#6c5ce7',
+                            '#00cec9',
+                            '#a29bfe',
+                            '#00b894',
+                            '#fdcb6e'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+
+            // Coin charts
+            const coinCharts = ['btcChart', 'ethChart', 'adaChart', 'solChart'];
+            coinCharts.forEach(chartId => {
+                const ctx = document.getElementById(chartId).getContext('2d');
+                const data = [];
+                for(let i = 0; i < 20; i++) {
+                    data.push(Math.random() * 100 + 400);
+                }
+                
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array(20).fill(''),
+                        datasets: [{
+                            data: data,
+                            borderColor: chartId === 'adaChart' ? '#ff7675' : '#00cec9',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                display: false
+                            },
+                            x: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | NFT Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #f5f6fa;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --nft-purple: #8a2be2;
+            --nft-blue: #4169e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--nft-purple), var(--nft-blue));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--nft-purple);
+            color: var(--nft-purple);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--nft-purple), var(--nft-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(65, 105, 225, 0.1));
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--nft-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--nft-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nft-hero-sample {
+            width: 180px;
+            height: 180px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid var(--nft-purple);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nft-hero-sample:hover {
+            transform: translateY(-10px);
+        }
+
+        .nft-hero-sample img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Featured Collections */
+        .collections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .collection-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .collection-banner {
+            height: 120px;
+            background: linear-gradient(45deg, var(--nft-purple), var(--nft-blue));
+            border-radius: 12px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .collection-logo {
+            position: absolute;
+            bottom: -40px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--nft-purple);
+            overflow: hidden;
+        }
+
+        .collection-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .collection-name {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .collection-creator {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .collection-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--nft-purple);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+
+        /* NFT Marketplace */
+        .marketplace-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Filters */
+        .filters {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            height: fit-content;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--nft-purple);
+            font-size: 1.1rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .filter-option input {
+            accent-color: var(--nft-purple);
+        }
+
+        .price-range {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .price-range-fill {
+            height: 100%;
+            width: 70%;
+            background: linear-gradient(90deg, var(--nft-purple), var(--nft-blue));
+            border-radius: 5px;
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        /* NFTs Grid */
+        .nfts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .nft-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .nft-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .nft-image {
+            height: 240px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .nft-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .nft-card:hover .nft-image img {
+            transform: scale(1.05);
+        }
+
+        .nft-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(138, 43, 226, 0.8);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .nft-content {
+            padding: 1.2rem;
+        }
+
+        .nft-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nft-collection {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nft-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .price-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--nft-purple);
+        }
+
+        .nft-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .action-btn:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+
+        .action-btn i {
+            margin-right: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .marketplace-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                max-width: 600px;
+                margin: 0 auto 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-image {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+           <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Markets.html" class="nav-link">Markets</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="NFT.html" class="nav-link active">NFTs</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search NFTs...">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-primary">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Discover Rare Digital Art & Collectibles</h1>
+                <p class="hero-subtitle">Explore, collect, and trade exclusive NFTs on the world's largest digital marketplace for crypto collectibles and NFTs.</p>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create NFT
+                </button>
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">$1.2B</div>
+                        <div class="stat-label">Total Volume</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">850K+</div>
+                        <div class="stat-label">NFTs Available</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">250K+</div>
+                        <div class="stat-label">Active Collectors</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="nft-hero-sample">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=400" alt="NFT Art">
+                </div>
+                <div class="nft-hero-sample">
+                    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=400" alt="NFT Art">
+                </div>
+                <div class="nft-hero-sample">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=400" alt="NFT Art">
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Collections -->
+        <section>
+            <h2 class="section-title">
+                <i class="fas fa-crown"></i>
+                Featured Collections
+            </h2>
+            
+            <div class="collections">
+                <!-- Collection 1 -->
+                <div class="collection-card">
+                    <div class="collection-banner"></div>
+                    <div class="collection-logo">
+                        <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=200" alt="Bored Ape">
+                    </div>
+                    <div class="collection-name">Bored Ape Yacht Club</div>
+                    <div class="collection-creator">
+                        <i class="fas fa-user"></i> Yuga Labs
+                    </div>
+                    <p>10,000 unique Bored Ape NFTs living on the Ethereum blockchain.</p>
+                    <div class="collection-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">4.2K ETH</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">9.8K</div>
+                            <div class="stat-label">Items</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Collection 2 -->
+                <div class="collection-card">
+                    <div class="collection-banner" style="background: linear-gradient(45deg, #ff6b6b, #ffa502);"></div>
+                    <div class="collection-logo">
+                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200" alt="CryptoPunks">
+                    </div>
+                    <div class="collection-name">CryptoPunks</div>
+                    <div class="collection-creator">
+                        <i class="fas fa-user"></i> Larva Labs
+                    </div>
+                    <p>10,000 uniquely generated characters. One of the first NFTs on Ethereum.</p>
+                    <div class="collection-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">2.8K ETH</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10K</div>
+                            <div class="stat-label">Items</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Collection 3 -->
+                <div class="collection-card">
+                    <div class="collection-banner" style="background: linear-gradient(45deg, #1e90ff, #70a1ff);"></div>
+                    <div class="collection-logo">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=200" alt="Art Blocks">
+                    </div>
+                    <div class="collection-name">Art Blocks</div>
+                    <div class="collection-creator">
+                        <i class="fas fa-user"></i> Erick Calderon
+                    </div>
+                    <p>Generative art project on the Ethereum blockchain.</p>
+                    <div class="collection-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">3.5K ETH</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12K</div>
+                            <div class="stat-label">Items</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NFT Marketplace -->
+        <section>
+            <h2 class="section-title">
+                <i class="fas fa-store"></i>
+                NFT Marketplace
+            </h2>
+            
+            <div class="marketplace-container">
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-section">
+                        <div class="filter-title">Status</div>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" checked> Buy Now
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> On Auction
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> New
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Has Offers
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-title">Price Range</div>
+                        <div class="price-range">
+                            <div class="price-range-fill"></div>
+                        </div>
+                        <div class="price-values">
+                            <span>0 ETH</span>
+                            <span>10 ETH</span>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-title">Categories</div>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" checked> Art
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Collectibles
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Domain Names
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Music
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Photography
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Sports
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Trading Cards
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Utility
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox"> Virtual Worlds
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </div>
+                
+                <!-- NFTs Grid -->
+                <div class="nfts-grid">
+                    <!-- NFT 1 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=400" alt="NFT Art">
+                            <div class="nft-badge">
+                                <i class="fas fa-bolt"></i> 2h 15m
+                            </div>
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Cosmic Explorer #124</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Space Voyagers
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Current Bid</div>
+                                <div class="price-value">1.42 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn">
+                                    <i class="fas fa-shopping-cart"></i> Buy
+                                </div>
+                                <div class="action-btn">
+                                    <i class="fas fa-gavel"></i> Bid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 2 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=400" alt="NFT Art">
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Digital Dreams #78</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Abstract Minds
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Price</div>
+                                <div class="price-value">0.85 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn" style="flex: auto;">
+                                    <i class="fas fa-shopping-cart"></i> Buy Now
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 3 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=400" alt="NFT Art">
+                            <div class="nft-badge">
+                                <i class="fas fa-fire"></i> Hot
+                            </div>
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Neon Jungle #45</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Cyber City
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Price</div>
+                                <div class="price-value">2.15 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn" style="flex: auto;">
+                                    <i class="fas fa-shopping-cart"></i> Buy Now
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 4 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?q=80&w=400" alt="NFT Art">
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Crypto King #920</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Pixel Punks
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Current Bid</div>
+                                <div class="price-value">0.68 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn">
+                                    <i class="fas fa-shopping-cart"></i> Buy
+                                </div>
+                                <div class="action-btn">
+                                    <i class="fas fa-gavel"></i> Bid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 5 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1634128221889-82ed6efebfc3?q=80&w=400" alt="NFT Art">
+                            <div class="nft-badge">
+                                <i class="fas fa-bolt"></i> 1h 30m
+                            </div>
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Ethereal Essence #302</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Mystic Arts
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Current Bid</div>
+                                <div class="price-value">3.25 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn">
+                                    <i class="fas fa-shopping-cart"></i> Buy
+                                </div>
+                                <div class="action-btn">
+                                    <i class="fas fa-gavel"></i> Bid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NFT 6 -->
+                    <div class="nft-card">
+                        <div class="nft-image">
+                            <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=400" alt="NFT Art">
+                        </div>
+                        <div class="nft-content">
+                            <div class="nft-name">Quantum Flux #511</div>
+                            <div class="nft-collection">
+                                <i class="fas fa-layer-group"></i> Sci-Fi Series
+                            </div>
+                            <div class="nft-price">
+                                <div class="price-label">Price</div>
+                                <div class="price-value">1.75 ETH</div>
+                            </div>
+                            <div class="nft-actions">
+                                <div class="action-btn" style="flex: auto;">
+                                    <i class="fas fa-shopping-cart"></i> Buy Now
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                    <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Simulate NFT interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const nftCards = document.querySelectorAll('.nft-card');
+            
+            nftCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if(!e.target.closest('.action-btn')) {
+                        // In a real implementation, this would open NFT details
+                        alert('Viewing NFT details');
+                    }
+                });
+            });
+            
+            // Simulate bid button action
+            const bidButtons = document.querySelectorAll('.action-btn:nth-child(2)');
+            bidButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    alert('Place a bid on this NFT');
+                });
+            });
+            
+            // Simulate buy button action
+            const buyButtons = document.querySelectorAll('.action-btn:first-child');
+            buyButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    alert('Buy this NFT now');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoHub | Cryptocurrency Prices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #121826;
+            --darker: #0d111c;
+            --light: #232427;
+            --accent: #00cec9;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --text-secondary: #8a94a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 206, 201, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 30%, rgba(162, 155, 254, 0.1) 0%, transparent 30%);
+            background-size: 200% 200%;
+            animation: gradientShift 25s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(18, 24, 38, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 106, 146, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.4);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            padding: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Prices Hero Section */
+        .prices-hero {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .prices-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .prices-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .prices-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .market-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .trend-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .positive {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .negative {
+            background: rgba(255, 118, 117, 0.2);
+            color: var(--danger);
+        }
+
+        /* Prices Controls */
+        .prices-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .controls-left {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+        }
+
+        .controls-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .sort-select {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 8px;
+            padding: 0.6rem;
+            color: var(--light);
+            outline: none;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+        }
+
+        .view-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Prices Table */
+        .prices-table-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            margin-bottom: 3rem;
+        }
+
+        .prices-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prices-table thead {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .prices-table th {
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .prices-table th:hover {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .prices-table th i {
+            margin-left: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .prices-table tbody tr {
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .prices-table tbody tr:hover {
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .prices-table td {
+            padding: 1.2rem 1rem;
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .coin-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .coin-name {
+            font-weight: 600;
+        }
+
+        .coin-symbol {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .price-change {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .sparkline-chart {
+            height: 40px;
+            width: 100px;
+        }
+
+        /* Featured Coins Section */
+        .featured-section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            background: rgba(0, 206, 201, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .featured-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 1rem;
+        }
+
+        .featured-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value-sm {
+            font-weight: 600;
+        }
+
+        .featured-chart {
+            height: 100px;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 28, 0.9);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(92, 106, 146, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .market-stats {
+                flex-wrap: wrap;
+            }
+            
+            .stat-card {
+                min-width: 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .prices-hero {
+                padding: 1.5rem;
+            }
+            
+            .prices-title {
+                font-size: 2.2rem;
+            }
+            
+            .prices-controls {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .controls-left, .controls-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+            
+            .prices-table thead {
+                display: none;
+            }
+            
+            .prices-table, .prices-table tbody, .prices-table tr, .prices-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .prices-table tr {
+                margin-bottom: 1.5rem;
+                border: 1px solid rgba(108, 92, 231, 0.3);
+                border-radius: 10px;
+                padding: 1rem;
+            }
+            
+            .prices-table td {
+                padding: 0.5rem;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .prices-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--accent);
+                margin-right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="logo-text">CRYPTOHUB</div>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="Prices.html" class="nav-link active">Prices</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="Wallet.html" class="nav-link">Wallet</a>
+            <a href="API.html" class="nav-link">API</a>
+            <a href="About.html" class="nav-link">About</a>
+        </nav>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search coins..." id="searchInput">
+        </div>
+        
+        <div class="user-actions">
+            <button class="btn btn-outline">Connect Wallet</button>
+            <div class="user-profile">
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Prices Hero Section -->
+        <section class="prices-hero">
+            <h1 class="prices-title">Cryptocurrency Prices & Market Data</h1>
+            <p class="prices-subtitle">Track real-time cryptocurrency prices, market capitalization, trading volume, and more for thousands of digital assets.</p>
+            
+            <div class="market-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-title">Total Market Cap</div>
+                    <div class="stat-value">$2.48T</div>
+                    <div class="trend-badge positive">+2.3%</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-title">24h Volume</div>
+                    <div class="stat-value">$98.5B</div>
+                    <div class="trend-badge positive">+5.7%</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-title">Total Cryptocurrencies</div>
+                    <div class="stat-value">24,680</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-title">Market Dominance</div>
+                    <div class="stat-value">BTC: 52.3%</div>
+                    <div class="trend-badge negative">-0.8%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prices Controls -->
+        <div class="prices-controls">
+            <div class="controls-left">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Top 10</button>
+                <button class="filter-btn">Gainers</button>
+                <button class="filter-btn">Losers</button>
+                <button class="filter-btn">New Listings</button>
+            </div>
+            
+            <div class="controls-right">
+                <select class="sort-select" id="sortSelect">
+                    <option value="market_cap">Market Cap</option>
+                    <option value="price">Price</option>
+                    <option value="change">24h Change</option>
+                    <option value="name">Name</option>
+                </select>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active"><i class="fas fa-th"></i></button>
+                    <button class="view-btn"><i class="fas fa-list"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prices Table -->
+        <div class="prices-table-container">
+            <table class="prices-table" id="pricesTable">
+                <thead>
+                    <tr>
+                        <th data-sort="rank"># <i class="fas fa-sort"></i></th>
+                        <th data-sort="name">Coin <i class="fas fa-sort"></i></th>
+                        <th data-sort="price">Price <i class="fas fa-sort"></i></th>
+                        <th data-sort="change">24h % <i class="fas fa-sort"></i></th>
+                        <th data-sort="market_cap">Market Cap <i class="fas fa-sort"></i></th>
+                        <th data-sort="volume">Volume(24h) <i class="fas fa-sort"></i></th>
+                        <th>Last 7 Days</th>
+                    </tr>
+                </thead>
+                <tbody id="cryptoTableBody">
+                    <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Featured Coins Section -->
+        <section class="featured-section">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                Featured Cryptocurrencies
+            </h2>
+            
+            <div class="featured-grid">
+                <!-- Bitcoin -->
+                <div class="featured-card">
+                    <div class="featured-header">
+                        <div class="featured-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Bitcoin</div>
+                            <div class="coin-symbol">BTC</div>
+                        </div>
+                    </div>
+                    <div class="featured-price">$61,842.75</div>
+                    <div class="price-change positive">+3.2%</div>
+                    
+                    <div class="featured-stats">
+                        <div class="featured-stat">
+                            <div class="stat-label">Market Cap</div>
+                            <div class="stat-value-sm">$1.21T</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Volume (24h)</div>
+                            <div class="stat-value-sm">$32.4B</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Dominance</div>
+                            <div class="stat-value-sm">52.3%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-chart">
+                        <canvas id="btcFeaturedChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Ethereum -->
+                <div class="featured-card">
+                    <div class="featured-header">
+                        <div class="featured-icon">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Ethereum</div>
+                            <div class="coin-symbol">ETH</div>
+                        </div>
+                    </div>
+                    <div class="featured-price">$3,412.56</div>
+                    <div class="price-change positive">+1.8%</div>
+                    
+                    <div class="featured-stats">
+                        <div class="featured-stat">
+                            <div class="stat-label">Market Cap</div>
+                            <div class="stat-value-sm">$408.5B</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Volume (24h)</div>
+                            <div class="stat-value-sm">$18.7B</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Dominance</div>
+                            <div class="stat-value-sm">17.2%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-chart">
+                        <canvas id="ethFeaturedChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Solana -->
+                <div class="featured-card">
+                    <div class="featured-header">
+                        <div class="featured-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <div class="coin-name">Solana</div>
+                            <div class="coin-symbol">SOL</div>
+                        </div>
+                    </div>
+                    <div class="featured-price">$142.35</div>
+                    <div class="price-change positive">+5.6%</div>
+                    
+                    <div class="featured-stats">
+                        <div class="featured-stat">
+                            <div class="stat-label">Market Cap</div>
+                            <div class="stat-value-sm">$62.8B</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Volume (24h)</div>
+                            <div class="stat-value-sm">$3.2B</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="stat-label">Dominance</div>
+                            <div class="stat-value-sm">2.6%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-chart">
+                        <canvas id="solFeaturedChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="logo-text">CRYPTOHUB</div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--secondary);">
+                    The most trusted cryptocurrency platform for trading, investing, and managing digital assets.
+                </p>
+                <div class="social-links">
+                   <a href="https://x.com/MightyDANI_" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573121588058" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/alphanotfound_1/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.telegram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Products</h3>
+                <ul class="footer-links">
+                    <li><a href="spot.html">Spot Trading</a></li>
+                    <li><a href="futures.html">Futures</a></li>
+                    <li><a href="Earn.html">Earn</a></li>
+                    <li><a href="NFT.html">NFT Marketplace</a></li>
+                    <li><a href="crypto_card.html">Crypto Card</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="Prices.html">Prices</a></li>
+                    <li><a href="API.html">API</a></li>
+                    <li><a href="blog.html"target="_blank" rel="noopener noreferrer">Blog</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="community.html">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                   <li><a href="About.html" target="_blank" rel="noopener noreferrer">About Us</a></li>
+                    <li><a href="legal_career.html">Careers</a></li>
+                    <li><a href="legal_career.html">Legal</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="privacy_terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 CryptoHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Sample cryptocurrency data
+        const cryptoData = [
+            { id: 1, name: "Bitcoin", symbol: "BTC", price: 61842.75, change: 3.2, market_cap: 1210000000000, volume: 32400000000, rank: 1 },
+            { id: 2, name: "Ethereum", symbol: "ETH", price: 3412.56, change: 1.8, market_cap: 408500000000, volume: 18700000000, rank: 2 },
+            { id: 3, name: "Tether", symbol: "USDT", price: 1.00, change: 0.0, market_cap: 83200000000, volume: 51400000000, rank: 3 },
+            { id: 4, name: "BNB", symbol: "BNB", price: 586.32, change: -0.5, market_cap: 90100000000, volume: 2100000000, rank: 4 },
+            { id: 5, name: "Solana", symbol: "SOL", price: 142.35, change: 5.6, market_cap: 62800000000, volume: 3200000000, rank: 5 },
+            { id: 6, name: "USD Coin", symbol: "USDC", price: 1.00, change: 0.0, market_cap: 53300000000, volume: 7800000000, rank: 6 },
+            { id: 7, name: "XRP", symbol: "XRP", price: 0.5321, change: -1.2, market_cap: 29400000000, volume: 1500000000, rank: 7 },
+            { id: 8, name: "Cardano", symbol: "ADA", price: 0.4621, change: -0.7, market_cap: 16400000000, volume: 420000000, rank: 8 },
+            { id: 9, name: "Dogecoin", symbol: "DOGE", price: 0.1245, change: 2.8, market_cap: 17800000000, volume: 980000000, rank: 9 },
+            { id: 10, name: "Avalanche", symbol: "AVAX", price: 36.78, change: 4.3, market_cap: 14200000000, volume: 670000000, rank: 10 }
+        ];
+
+        // Populate the table with data
+        function populateTable() {
+            const tableBody = document.getElementById('cryptoTableBody');
+            tableBody.innerHTML = '';
+            
+            cryptoData.forEach(crypto => {
+                const row = document.createElement('tr');
+                
+                // Generate random data for sparkline
+                const sparklineData = [];
+                for (let i = 0; i < 7; i++) {
+                    sparklineData.push(Math.random() * 100 + (crypto.change > 0 ? 400 : 300));
+                }
+                
+                row.innerHTML = `
+                    <td data-label="Rank">${crypto.rank}</td>
+                    <td data-label="Coin">
+                        <div class="coin-info">
+                            <div class="coin-icon">
+                                <i class="fab fa-${crypto.symbol.toLowerCase()}"></i>
+                            </div>
+                            <div>
+                                <div class="coin-name">${crypto.name}</div>
+                                <div class="coin-symbol">${crypto.symbol}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="Price">$${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td data-label="24h %">
+                        <div class="price-change ${crypto.change >= 0 ? 'positive' : 'negative'}">
+                            ${crypto.change >= 0 ? '+' : ''}${crypto.change}%
+                        </div>
+                    </td>
+                    <td data-label="Market Cap">$${(crypto.market_cap / 1000000000).toFixed(2)}B</td>
+                    <td data-label="Volume(24h)">$${(crypto.volume / 1000000).toFixed(2)}M</td>
+                    <td data-label="Last 7 Days">
+                        <div class="sparkline-chart">
+                            <canvas id="sparkline-${crypto.id}"></canvas>
+                        </div>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+                
+                // Create sparkline chart
+                setTimeout(() => {
+                    const ctx = document.getElementById(`sparkline-${crypto.id}`).getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: Array(7).fill(''),
+                            datasets: [{
+                                data: sparklineData,
+                                borderColor: crypto.change >= 0 ? '#00cec9' : '#ff7675',
+                                borderWidth: 2,
+                                pointRadius: 0,
+                                tension: 0.3,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    display: false
+                                },
+                                x: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }, 100);
+            });
+        }
+
+        // Sort table function
+        function sortTable(column, ascending) {
+            cryptoData.sort((a, b) => {
+                let valueA, valueB;
+                
+                switch(column) {
+                    case 'rank':
+                        valueA = a.rank;
+                        valueB = b.rank;
+                        break;
+                    case 'name':
+                        valueA = a.name;
+                        valueB = b.name;
+                        break;
+                    case 'price':
+                        valueA = a.price;
+                        valueB = b.price;
+                        break;
+                    case 'change':
+                        valueA = a.change;
+                        valueB = b.change;
+                        break;
+                    case 'market_cap':
+                        valueA = a.market_cap;
+                        valueB = b.market_cap;
+                        break;
+                    case 'volume':
+                        valueA = a.volume;
+                        valueB = b.volume;
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (typeof valueA === 'string') {
+                    return ascending 
+                        ? valueA.localeCompare(valueB)
+                        : valueB.localeCompare(valueA);
+                } else {
+                    return ascending 
+                        ? valueA - valueB
+                        : valueB - valueA;
+                }
+            });
+            
+            populateTable();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate table with data
+            populateTable();
+            
+            // Set up sorting
+            const sortSelect = document.getElementById('sortSelect');
+            sortSelect.addEventListener('change', function() {
+                sortTable(this.value, false);
+            });
+            
+            // Set up search
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                // In a real app, this would filter the data
+                console.log(`Searching for: ${searchTerm}`);
+            });
+            
+            // Set up filter buttons
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // In a real app, this would filter the table
+                    console.log(`Filter: ${this.textContent}`);
+                });
+            });
+            
+            // Set up view toggle
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.view-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // In a real app, this would change the view
+                    console.log(`View: ${this.querySelector('i').className.includes('th') ? 'Grid' : 'List'}`);
+                });
+            });
+            
+            // Featured charts
+            // Bitcoin featured chart
+            const btcCtx = document.getElementById('btcFeaturedChart').getContext('2d');
+            new Chart(btcCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1D', '1W', '1M', '3M', '6M', '1Y'],
+                    datasets: [{
+                        label: 'Bitcoin',
+                        data: [55000, 58000, 52000, 42000, 38000, 28000],
+                        borderColor: '#6c5ce7',
+                        backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            ticks: {
+                                color: '#8a94a6'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Ethereum featured chart
+            const ethCtx = document.getElementById('ethFeaturedChart').getContext('2d');
+            new Chart(ethCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1D', '1W', '1M', '3M', '6M', '1Y'],
+                    datasets: [{
+                        label: 'Ethereum',
+                        data: [3200, 3100, 2900, 2600, 2200, 1800],
+                        borderColor: '#00cec9',
+                        backgroundColor: 'rgba(0, 206, 201, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            ticks: {
+                                color: '#8a94a6'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Solana featured chart
+            const solCtx = document.getElementById('solFeaturedChart').getContext('2d');
+            new Chart(solCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1D', '1W', '1M', '3M', '6M', '1Y'],
+                    datasets: [{
+                        label: 'Solana',
+                        data: [140, 135, 110, 95, 70, 40],
+                        borderColor: '#fdcb6e',
+                        backgroundColor: 'rgba(253, 203, 110, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: false
+                        },
+                        x: {
+                            ticks: {
+                                color: '#8a94a6'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
